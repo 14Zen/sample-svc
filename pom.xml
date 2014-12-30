@@ -24,6 +24,7 @@
     <checkstyle.version>2.13</checkstyle.version>
     <pmd.version>3.3</pmd.version>
     <spring.boot.version>1.2.0.RELEASE</spring.boot.version>
+    <docker.port>8085</docker.port>
   </properties>
 
   <parent>
@@ -142,6 +143,7 @@
   </dependencies>
 
   <build>
+    <finalName>sample-svc</finalName>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -242,7 +244,29 @@
           </dependency>
         </dependencies>
       </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>docker</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
+
   </build>
 
   <reporting>
